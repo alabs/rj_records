@@ -11,7 +11,7 @@
       <field name="name">Permisos de lectura</field>
       <field name="category_id" ref="rj_records_category_group_user"/>
     </record>
-    <record id="group_write" model="res.group">
+    <record id="group_write" model="res.groups">
       <field name="name">Permisos de escritura</field>
       <field name="category_id" ref="rj_records_category_group_user"/>
     </record>

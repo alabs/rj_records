@@ -15,10 +15,16 @@
     'installable': True,
     'application': True,
 
-    'depends': ['base', 'project'],
+    'depends': ['base', 'project', 'project_task_default_stage'],
 
     'data': [
+        'security/rj_records_security.xml',
+        'security/ir.model.access.csv',
+        'views/rj_menu.xml',
         'views/expedient_views.xml',
+        'views/project_views.xml',
+        'data/sequences.xml',
+        'data/default_stages.xml',
     ],
 
     'demo': [

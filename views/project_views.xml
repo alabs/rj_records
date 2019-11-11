@@ -1,30 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-  <menuitem name="Expedientes"
-    id="menu_main_rj"
-    sequence = "1"/>
-
-  <record id="expedient_form" model="ir.ui.view">
-    <field name="name">rj_records.expedient.form</field>
-    <field name="model">rj_records.expedient</field>
+  <record id="edit_project" model="ir.ui.view">
+    <field name="name">project.project.form</field>
+    <field name="model">project.project</field>
+    <field name="inherit_id" ref="project.edit_project"/>
     <field name="arch" type="xml">
-      <form string="Expedientes">
-        <sheet string="Expediente">
+      <xpath expr="//field[@name='name']" position="attributes">
+        <attribute name="placeholder">Nombre del Expediente</attribute>
+      </xpath>
+      <xpath expr="//field[@name='label_tasks']" position="after">
+        <label for="code" class="oe_inline" string="N° de expediente :"/>
+        <field name="code" string="Código de expediente" class="oe_inline oe_input_align" />
+      </xpath>
+      <xpath expr="//page[@name='settings']" position="before">
+        <page name="asunto" string="Datos Asunto">
+          <group>
+            <group>
+              <field name="state" string="Estado" />
+              <field name="source_id" string="Origen del asunto" />
+              <field name="subject_id" string="Asunto" domain="[('area_id', '=', area_id)]" context="{'default_area_id': area_id}" />
+              <field name="procurer" string="Procurador" />
+            </group>
+            <group>
+              <field name="complexity" string="Complejidad" />
+              <field name="area_id" string="Area" />
+              <field name="type" string="Tipo" />
+            </group>
+          </group>
+          <group>
+            <field name="client_ids" string="Clientes" />
+            <field name="managers_ids" string="Responsables" />
+          </group>
+        </page>
+        <page name="economics" string="Datos económicos">
+          
+        </page>
+      </xpath>
+    </field>
+  </record>
+
+  <record id="view_project_kanban" model="ir.ui.view">
+    <field name="name">project.view_project_kanban</field>
+    <field name="model">project.project</field>
+    <field name="inherit_id" ref="project.view_project_kanban"/>
+    <field name="arch" type="xml">
+      <xpath expr="//field[@name='name']" position="after">
+        <field name="code" />
+      </xpath>
+      <xpath expr="//div[@class='o_primary']" position="before">
+        <div class="o_primary">
+          <span>
+            <strong><t t-esc="record.code.value" /></strong>
+          </span>
+        </div>
+      </xpath>
+    </field>
+  </record>
+
+  <record id="project_project_view_form_simplified" model="ir.ui.view">
+    <field name="name">project.project.view.form.simplified</field>
+    <field name="model">project.project</field>
+    <field name="inherit_id" ref="project.project_project_view_form_simplified"/>
+    <field name="arch" type="xml">
+      <xpath expr="//form" position="replace">
+        <div>
           <div class="oe_title">
             <h1>
               <field name="name" placeholder="Nombre del expediente" />
             </h1>
           </div>
           <notebook>
-            <page name="details" string="Detalles">
-            </page>
-            <page name="subject" string="Asunto">
-            </page>
-            <page name="economics" string="Datos económicos">
+            <page string="Datos del asunto">
+              <group>
+                <group>
+                  <field name="state" string="Estado" />
+                  <field name="source_id" string="Origen del asunto" />
+                  <field name="subject_id" string="Asunto" domain="[('area_id', '=', area_id)]" context="{'default_area_id': area_id}" />
+                  <field name="procurer" string="Procurador" />
+                </group>
+                <group>
+                  <field name="complexity" string="Complejidad" />
+                  <field name="area_id" string="Area" />
+                  <field name="type" string="Tipo" />
+                </group>
+              </group>
+              <group>
+                <field name="client_ids" string="Clientes" />
+                <field name="managers_ids" string="Responsables" />
+              </group>
             </page>
           </notebook>
-        </sheet>
-      </form>
+          <footer>
+            <button string="Crear" name="open_tasks" type="object" class="btn-primary o_open_tasks" />
+            <button string="Descartar" class="btn-secondary" special="cancel" />
+          </footer>
+        </div>
+      </xpath>
     </field>
   </record>
 </odoo>

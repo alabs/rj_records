@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+  <data>
+    <menuitem
+      id="menu_rj_records"
+      name="Expedientes"
+      sequence="1"
+      groups="group_read,group_write"
+      web_icon="rj_records,static/description/icon.png"/>
+  </data>
+</odoo>
+

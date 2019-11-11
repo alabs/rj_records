@@ -24,16 +24,14 @@ FIELD_COMPLEXITY = [
 ]
 
 
-class Expedient(models.Model):
+class Project(models.Model):
     _inherit = 'project.project'
-    _name = 'rj_records.expedient'
+    _name = 'project.project'
 
     name = fields.Char(required=True, size=30)
 
     code = fields.Char(
-        compute='_compute_code',
-        string='N° de Expediente',
-        store=True
+        string='N° de Expediente'
     )
 
     state = fields.Selection(
@@ -108,13 +106,14 @@ class Expedient(models.Model):
 
     procurer = fields.Char(
         size=30,
-        required=True,
         string='Procurador'
     )
 
-    @api.one
-    def _compute_code(self):
-        self.code = self.id + "/" + datetime.strftime(self.date_start, '%Y')
+    @api.model
+    def create(self, vals):
+        code = self.env['ir.sequence'].next_by_code('rj_records.files') or '/'
+        vals['code'] = code
+        return super(Project, self).create(vals)
 
     @api.multi
     def action_close(self):

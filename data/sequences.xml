@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<odoo>
+  <record id="seq_rj_records" model="ir.sequence">
+    <field name="name">rj_records_files</field>
+    <field name="code">rj_records.files</field>
+    <field name="suffix">/%(year)s</field>
+    <field name="number_next">1</field>
+    <field name="implementation">no_gap</field>
+    <field name="padding">6</field>
+    <field eval="1" name="number_next" />
+    <field eval="1" name="number_increment" />
+  </record>
+</odoo>
