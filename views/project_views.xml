@@ -73,13 +73,18 @@
             <page string="Datos del asunto">
               <group>
                 <group>
+                  <field name="user_id" invisible="1"/>
+                  <label for="alias_name" string="Choose a Project Email" attrs="{'invisible': [('alias_domain', '=', False)]}"/>
+                  <div name="alias_def" attrs="{'invisible': [('alias_domain', '=', False)]}">
+                    <field name="alias_name" class="oe_inline"/>@<field name="alias_domain" class="oe_inline" readonly="1"/>
+                  </div>
                   <field name="state" string="Estado" />
                   <field name="source_id" string="Origen del asunto" />
                   <field name="subject_id" string="Asunto" domain="[('area_id', '=', area_id)]" context="{'default_area_id': area_id}" />
                   <field name="procurer" string="Procurador" />
                 </group>
                 <group>
-                  <field name="complexity" string="Complejidad" />
+                  <field name="complexity" widget="priority" string="Complejidad" />
                   <field name="area_id" string="Area" />
                   <field name="type" string="Tipo" />
                 </group>

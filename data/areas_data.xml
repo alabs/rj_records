@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record model="rj_records.area" id="area_1">
+        <field name="name">Penal</field>
+    </record>
+    <record model="rj_records.area" id="area_2">
+        <field name="name">Civil</field>
+    </record>
+    <record model="rj_records.area" id="area_3">
+        <field name="name">Laboral</field>
+    </record>
+    <record model="rj_records.area" id="area_4">
+        <field name="name">Administrativo</field>
+    </record>
+</odoo>

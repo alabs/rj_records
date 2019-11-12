@@ -16,11 +16,12 @@ FIELD_TYPES = [
 ]
 
 FIELD_COMPLEXITY = [
-    ('5', '5'),
-    ('4', '4'),
-    ('3', '3'),
-    ('2', '2'),
-    ('1', '1')
+    ('0', 'Ninguna'),
+    ('1', 'Muy Baja'),
+    ('2', 'Baja'),
+    ('3', 'Media'),
+    ('4', 'Alta'),
+    ('5', 'Muy Alta')
 ]
 
 
@@ -28,7 +29,7 @@ class Project(models.Model):
     _inherit = 'project.project'
     _name = 'project.project'
 
-    name = fields.Char(required=True, size=30)
+    name = fields.Char(required=True, size=60)
 
     code = fields.Char(
         string='N° de Expediente'

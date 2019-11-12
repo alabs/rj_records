@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <!-- Laboral subjects -->
+    <record model="rj_records.subject" id="subject_1">
+        <field name="name">Despido</field>
+        <field name="area_id" eval="ref('area_3')" />
+    </record>
+    <record model="rj_records.subject" id="subject_2">
+        <field name="name">EREs</field>
+        <field name="area_id" eval="ref('area_3')" />
+    </record>
+    <record model="rj_records.subject" id="subject_3">
+        <field name="name">Sanciones</field>
+        <field name="area_id" eval="ref('area_3')" />
+    </record>
+    <record model="rj_records.subject" id="subject_4">
+        <field name="name">Vacaciones</field>
+        <field name="area_id" eval="ref('area_3')" />
+    </record>
+    <record model="rj_records.subject" id="subject_5">
+        <field name="name">INSS</field>
+        <field name="area_id" eval="ref('area_3')" />
+    </record>
+    <record model="rj_records.subject" id="subject_6">
+        <field name="name">DDFF</field>
+        <field name="area_id" eval="ref('area_3')" />
+    </record>
+</odoo>

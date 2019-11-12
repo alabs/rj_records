@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record model="crm.stage" id="stage_lead1">
+        <field name="name">Nuevo</field>
+        <field name="sequence">1</field>
+        <field name="on_change" eval="True" />
+        <field name="probability">10.0</field>
+    </record>
+    <record model="crm.stage" id="stage_lead2">
+        <field name="name">Calificado</field>
+        <field name="sequence">2</field>
+        <field name="on_change" eval="True" />
+        <field name="probability">50.0</field>
+    </record>
+    <record model="crm.stage" id="stage_lead3">
+        <field name="name">Propuesta</field>
+        <field name="sequence">3</field>
+        <field name="on_change" eval="True" />
+        <field name="probability">80.0</field>
+    </record>
+    <record model="crm.stage" id="stage_lead4">
+        <field name="name">Ganado</field>
+        <field name="fold" eval="False"/>
+        <field name="is_won">True</field>
+        <field name="sequence">70</field>
+        <field name="on_change" eval="True" />
+        <field name="probability">100.0</field>
+    </record>
+
+    <delete model="crm.stage" id="crm.stage_lead1" />
+    <delete model="crm.stage" id="crm.stage_lead2" />
+    <delete model="crm.stage" id="crm.stage_lead3" />
+    <delete model="crm.stage" id="crm.stage_lead4" />
+</odoo>

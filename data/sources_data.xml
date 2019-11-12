@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record model="rj_records.source" id="source_1">
+        <field name="name">RRSS</field>
+    </record>
+    <record model="rj_records.source" id="source_2">
+        <field name="name">Web</field>
+    </record>
+    <record model="rj_records.source" id="source_3">
+        <field name="name">Otro cliente</field>
+    </record>
+</odoo>

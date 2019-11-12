@@ -15,7 +15,12 @@
     'installable': True,
     'application': True,
 
-    'depends': ['base', 'project', 'project_task_default_stage'],
+    'depends': [
+        'base',
+        'crm',
+        'project',
+        'project_task_default_stage'
+    ],
 
     'data': [
         'security/rj_records_security.xml',
@@ -23,8 +28,13 @@
         'views/rj_menu.xml',
         'views/expedient_views.xml',
         'views/project_views.xml',
+        'views/crm_views.xml',
         'data/sequences.xml',
         'data/default_stages.xml',
+        'data/crm_stage_data.xml',
+        'data/areas_data.xml',
+        'data/subject_data.xml',
+        'data/sources_data.xml',
     ],
 
     'demo': [
