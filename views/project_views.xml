@@ -5,6 +5,9 @@
     <field name="model">project.project</field>
     <field name="inherit_id" ref="project.edit_project"/>
     <field name="arch" type="xml">
+      <xpath expr="//header" position="inside">
+        <field name="state" widget="statusbar" options="{'clickable': '1'}" statusbar_visible="open,closed,sleep" />
+      </xpath>
       <xpath expr="//field[@name='name']" position="attributes">
         <attribute name="placeholder">Nombre del Expediente</attribute>
       </xpath>
@@ -16,15 +19,15 @@
         <page name="asunto" string="Datos Asunto">
           <group>
             <group>
-              <field name="state" string="Estado" />
+              <field name="state" string="Estado" invisible="1"/>
               <field name="source_id" string="Origen del asunto" />
-              <field name="subject_id" string="Asunto" domain="[('area_id', '=', area_id)]" context="{'default_area_id': area_id}" />
+              <field name="type" string="Tipo" />
               <field name="procurer" string="Procurador" />
             </group>
             <group>
-              <field name="complexity" string="Complejidad" />
+              <field name="complexity" widget="priority" string="Complejidad" />
               <field name="area_id" string="Area" />
-              <field name="type" string="Tipo" />
+              <field name="subject_id" string="Asunto" domain="[('area_id', '=', area_id)]" context="{'default_area_id': area_id}" />
             </group>
           </group>
           <group>
@@ -33,7 +36,12 @@
           </group>
         </page>
         <page name="economics" string="Datos económicos">
-          
+          <group>
+            <group>
+              <field name="revenue" widget="monetary" options="{'currency_field': 'company_currency'}" />
+              <field name="lead_id" />
+            </group>
+          </group>
         </page>
       </xpath>
     </field>
@@ -80,18 +88,25 @@
                   </div>
                   <field name="state" string="Estado" />
                   <field name="source_id" string="Origen del asunto" />
-                  <field name="subject_id" string="Asunto" domain="[('area_id', '=', area_id)]" context="{'default_area_id': area_id}" />
+                  <field name="type" string="Tipo" />
                   <field name="procurer" string="Procurador" />
                 </group>
                 <group>
                   <field name="complexity" widget="priority" string="Complejidad" />
                   <field name="area_id" string="Area" />
-                  <field name="type" string="Tipo" />
+                  <field name="subject_id" string="Asunto" domain="[('area_id', '=', area_id)]" context="{'default_area_id': area_id}" />
                 </group>
               </group>
               <group>
                 <field name="client_ids" string="Clientes" />
                 <field name="managers_ids" string="Responsables" />
+              </group>
+            </page>
+            <page string="Datos económicos">
+              <group>
+                <group>
+                  <field name="revenue" widget="monetary" options="{'currency_field': 'company_currency'}" />
+                </group>
               </group>
             </page>
           </notebook>
@@ -103,4 +118,20 @@
       </xpath>
     </field>
   </record>
+
+  <record id="action_view_task" model="ir.actions.act_window">
+    <field name="name">Calendario de tareas</field>
+    <field name="res_model">project.task</field>
+    <field name="view_mode">calendar,kanban,tree,form,pivot,graph,activity</field>
+    <field name="context">{'search_default_my_tasks': 1}</field>
+    <field name="search_view_id" ref="project.view_task_search_form"/>
+    <field name="help" type="html">
+      <p class="o_view_nocontent_smiling_face">
+        Create a new task
+        </p><p>
+          Odoo's project management allows you to manage the pipeline of your tasks efficiently.<br/>
+            You can track progress, discuss on tasks, attach documents, etc.
+        </p>
+      </field>
+    </record>
 </odoo>

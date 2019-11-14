@@ -4,6 +4,9 @@
     <record id="new" model="project.task.type">
       <field name="sequence">10</field>
       <field name="name">Nuevo</field>
+      <field name="legend_blocked">Bloqueado</field>
+      <field name="legend_done">Listo</field>
+      <field name="legend_normal">En curso</field>
       <field name="case_default" eval="True"/>
     </record>
     <record id="in_process" model="project.task.type">

@@ -6,11 +6,19 @@
     <field name="inherit_id" ref="crm.crm_case_form_view_oppor"/>
     <field name="arch" type="xml">
       <xpath expr="//button[@name='action_schedule_meeting']" position="after">
-        <button name="create_project" string="Crear Proyecto"
+        <button name="create_project" string="Crear expediente"
           type="object"
           class="oe_stat_button" icon="fa-tasks"
-          attrs="{'invisible': [('probability', '&lt;', 100)]}"
+          attrs="{'invisible': ['|', ('probability', '&lt;', 100), ('project_id', '!=', False)]}"
         />
+        <button name="open_project" string="Ir al expediente"
+          type="object"
+          class="oe_stat_button" icon="fa-tasks"
+          attrs="{'invisible': [('project_id', '=', False)]}"
+        />
+      </xpath>
+      <xpath expr="//field[@name='description']" position="after">
+        <field name="project_id" />
       </xpath>
     </field>
   </record>

@@ -28,6 +28,7 @@ FIELD_COMPLEXITY = [
 class Project(models.Model):
     _inherit = 'project.project'
     _name = 'project.project'
+    _rec_name = 'code'
 
     name = fields.Char(required=True, size=60)
 
@@ -36,10 +37,8 @@ class Project(models.Model):
     )
 
     state = fields.Selection(
-        selection=FIELD_STATES,
+        [('open', 'Abierto'), ('closed', 'Cerrado'), ('sleep', 'Dormido')],
         string='Estado',
-        readonly=False,
-        required=True,
         default='open'
     )
 
@@ -83,6 +82,14 @@ class Project(models.Model):
         track_visibility='onchange'
     )
 
+    lead_id = fields.Many2one(
+        'crm.lead',
+        string='CRM',
+        readonly=True,
+        auto_join=True,
+        track_visibility='onchange'
+    )
+
     area_id = fields.Many2one(
         'rj_records.area',
         string='Area',
@@ -109,6 +116,18 @@ class Project(models.Model):
         size=30,
         string='Procurador'
     )
+
+    revenue = fields.Monetary('Honorarios Pactados', currency_field='company_currency', tracking=True)
+
+    company_currency = fields.Many2one(string='Currency', related='company_id.currency_id', readonly=True, relation="res.currency")
+
+    @api.multi
+    def name_get(self):
+        result = []
+        for record in self:
+            rec_name = "{} - {}".format(record.code, record.name)
+            result.append((record.id, rec_name))
+        return result
 
     @api.model
     def create(self, vals):
