@@ -5,8 +5,10 @@
     <field name="model">project.project</field>
     <field name="inherit_id" ref="project.edit_project"/>
     <field name="arch" type="xml">
-      <xpath expr="//header" position="inside">
-        <field name="state" widget="statusbar" options="{'clickable': '1'}" statusbar_visible="open,closed,sleep" />
+      <xpath expr="//header" position="replace">
+        <header>
+          <field name="state" widget="statusbar" clickable="1" statusbar_visible="open,closed,sleep"/>
+        </header>
       </xpath>
       <xpath expr="//field[@name='name']" position="attributes">
         <attribute name="placeholder">Nombre del Expediente</attribute>
@@ -19,7 +21,6 @@
         <page name="asunto" string="Datos Asunto">
           <group>
             <group>
-              <field name="state" string="Estado" invisible="1"/>
               <field name="source_id" string="Origen del asunto" />
               <field name="type" string="Tipo" />
               <field name="procurer" string="Procurador" />
@@ -38,9 +39,39 @@
         <page name="economics" string="Datos económicos">
           <group>
             <group>
-              <field name="revenue" widget="monetary" options="{'currency_field': 'company_currency'}" />
               <field name="lead_id" />
             </group>
+            <group>
+              <field name="currency_id" invisible="1" />
+              <field name="revenue" widget="monetary" options="{'currency_field': 'currency_id'}" />
+            </group>
+          </group>
+          <group>
+            <field name="invoice_ids" string="Facturas">
+              <tree string="Facturas" editable="top">
+                <field name="vendor_display_name" string="Cliente" />
+                <field name="number" string="N°" />
+                <field name="date_invoice" string="Fecha" />
+                <field name="amount_untaxed" string="Total" />
+                <field name="residual_signed" string="Pendiente" />
+                <field name="state" string="Estado" />
+              </tree>
+            </field>
+            <field name="expense_ids" string="Gastos">
+              <tree string="Gastos" editable="top">
+                <field name="employee_id" string="Generado por" />
+                <field name="name" string="Descripción" />
+                <field name="payment_mode" string="Pagado por" />
+                <field name="total_amount" string="Total" />
+                <field name="state" string="Estado" />
+              </tree>
+            </field>
+          </group>
+          <group class="oe_subtotal_footer oe_right">
+            <field name="amount_earned"/>
+            <field name="amount_expensed"/>
+            <field name="amount_hours" />
+            <field name="amount_total" class="oe_subtotal_footer_separator"/>
           </group>
         </page>
       </xpath>
@@ -86,7 +117,6 @@
                   <div name="alias_def" attrs="{'invisible': [('alias_domain', '=', False)]}">
                     <field name="alias_name" class="oe_inline"/>@<field name="alias_domain" class="oe_inline" readonly="1"/>
                   </div>
-                  <field name="state" string="Estado" />
                   <field name="source_id" string="Origen del asunto" />
                   <field name="type" string="Tipo" />
                   <field name="procurer" string="Procurador" />
@@ -105,7 +135,7 @@
             <page string="Datos económicos">
               <group>
                 <group>
-                  <field name="revenue" widget="monetary" options="{'currency_field': 'company_currency'}" />
+                  <field name="revenue" widget="monetary" options="{'currency_field': 'currency_id'}" />
                 </group>
               </group>
             </page>
@@ -128,10 +158,37 @@
     <field name="help" type="html">
       <p class="o_view_nocontent_smiling_face">
         Create a new task
-        </p><p>
+      </p>
+      <p>
           Odoo's project management allows you to manage the pipeline of your tasks efficiently.<br/>
             You can track progress, discuss on tasks, attach documents, etc.
-        </p>
-      </field>
-    </record>
+      </p>
+    </field>
+  </record>
+
+  <record id="pivot_view" model="ir.ui.view">
+    <field name="name">project.view_pivot</field>
+    <field name="model">project.project</field>
+    <field name="arch" type="xml">
+      <pivot string="Análisis de expedientes">
+        <field name="user_id" type="row" />
+      </pivot>
+    </field>
+  </record>
+
+  <record id="project.open_view_project_all" model="ir.actions.act_window">
+    <field name="name">Expedientes</field>
+    <field name="res_model">project.project</field>
+    <field name="inherit_id" ref="project.open_view_project_all"/>
+    <field name="view_mode">kanban,tree,form,pivot</field>
+    <field name="search_view_id" ref="project.view_project_project_filter"/>
+    <field name="target">main</field>
+    <field name="help" type="html">
+      <p class="o_view_nocontent_smiling_face">
+        Create a new project
+      </p><p>
+        Or <a type="action" name="%(project.ir_actions_server_project_sample)d" tabindex="-1">activate a sample project</a> to play with.
+      </p>
+    </field>
+  </record>
 </odoo>

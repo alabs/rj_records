@@ -19,6 +19,7 @@
         'account',
         'base',
         'crm',
+        'hr_expense',
         'hr_timesheet',
         'l10n_es',
         'project',

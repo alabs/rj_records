@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+import logging
+_logger = logging.getLogger(__name__)
 from datetime import datetime
 from odoo import api, fields, models
 
@@ -117,9 +119,79 @@ class Project(models.Model):
         string='Procurador'
     )
 
-    revenue = fields.Monetary('Honorarios Pactados', currency_field='company_currency', tracking=True)
+    currency_id = fields.Many2one(
+        'res.currency',
+        string='Currency',
+        related='company_id.currency_id',
+        readonly=True
+    )
 
-    company_currency = fields.Many2one(string='Currency', related='company_id.currency_id', readonly=True, relation="res.currency")
+    revenue = fields.Monetary(
+        'Honorarios Pactados',
+        currency_field='currency_id',
+        tracking=True
+    )
+
+    expense_ids = fields.One2many(
+        'hr.expense',
+        'project_id',
+        string='Gastos'
+    )
+
+    invoice_ids = fields.One2many(
+        'account.invoice',
+        'project_id',
+        string='Facturas'
+    )
+
+    amount_earned = fields.Monetary(
+        'Ingresos',
+        currency_field='currency_id',
+        compute='_compute_amount_earned',
+    )
+
+    amount_expensed = fields.Monetary(
+        'Gastos',
+        currency_field='currency_id',
+        compute='_compute_amount_expensed',
+    )
+
+    amount_hours =  fields.Monetary(
+        'Costo en horas',
+        currency_field='currency_id',
+        compute='_compute_amount_hours',
+    )
+
+    amount_total = fields.Monetary(
+        'Balance',
+        currency_field='currency_id',
+        compute='_compute_amount_total',
+    )
+
+    def _compute_amount_hours(self):
+        for project in self:
+            amount_hours = sum(line.amount for line in project.analytic_account_id.line_ids)
+            project.amount_hours = amount_hours
+
+    def _compute_amount_earned(self):
+        for record in self:
+           record.amount_earned = sum(line.amount_untaxed for line in record.invoice_ids)
+
+    def _compute_amount_expensed(self):
+        for record in self:
+           record.amount_expensed = 0 - sum(line.total_amount for line in record.expense_ids)
+
+    def _compute_amount_total(self):
+        for record in self:
+           record.amount_total = record.amount_earned + record.amount_expensed + record.amount_hours
+
+    def close_project(self):
+        for rec in self:
+            rec.state = "closed"
+
+    def open_project(self):
+        for rec in self:
+            rec.state = "open"
 
     @api.multi
     def name_get(self):
@@ -134,15 +206,3 @@ class Project(models.Model):
         code = self.env['ir.sequence'].next_by_code('rj_records.files') or '/'
         vals['code'] = code
         return super(Project, self).create(vals)
-
-    @api.multi
-    def action_close(self):
-        '''Change expedient state to closed'''
-        self.ensure_one()
-        self.state = 'closed'
-
-    @api.multi
-    def action_sleep(self):
-        '''Change expedient state to sleep'''
-        self.ensure_one()
-        self.state = 'sleep'
