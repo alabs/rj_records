@@ -1,8 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import logging
-_logger = logging.getLogger(__name__)
-from datetime import datetime
 from odoo import api, fields, models
 
 FIELD_STATES = [

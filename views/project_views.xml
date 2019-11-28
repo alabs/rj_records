@@ -47,7 +47,7 @@
             </group>
           </group>
           <group>
-            <field name="invoice_ids" string="Facturas">
+            <field name="invoice_ids" domain="[('project_id', '=', id)]" string="Facturas">
               <tree string="Facturas" editable="top">
                 <field name="vendor_display_name" string="Cliente" />
                 <field name="number" string="N°" />
@@ -57,7 +57,7 @@
                 <field name="state" string="Estado" />
               </tree>
             </field>
-            <field name="expense_ids" string="Gastos">
+            <field name="expense_ids" domain="[('project_id', '=', id)]" string="Gastos">
               <tree string="Gastos" editable="top">
                 <field name="employee_id" string="Generado por" />
                 <field name="name" string="Descripción" />

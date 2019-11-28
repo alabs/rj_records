@@ -1,9 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import logging
-_logger = logging.getLogger(__name__)
 from odoo import api, fields, models, _
-
 
 class Invoice(models.Model):
     _inherit = 'account.invoice'

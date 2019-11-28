@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<odoo>
+  <record id="expense.view.form" model="ir.ui.view">
+    <field name="name">hr.expense.view.form</field>
+    <field name="model">hr.expense</field>
+    <field name="inherit_id" ref="hr.expense.view.form"/>
+    <field name="arch" type="xml">
+      <xpath expr="//field[@name='product_id']" position="before">
+        <field name="project_id" />
+      </xpath>
+    </field>
+  </record>
+
+  <record id="invoice.form" model="ir.ui.view">
+    <field name="name">account.invoice.form</field>
+    <field name="model">account.invoice</field>
+    <field name="inherit_id" ref="account.invoice.form"/>
+    <field name="arch" type="xml">
+      <xpath expr="//field[@name='partner_id']" position="before">
+        <field name="project_id" />
+      </xpath>
+    </field>
+  </record>
+</odoo>

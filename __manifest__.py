@@ -34,6 +34,7 @@
         'views/expedient_views.xml',
         'views/project_views.xml',
         'views/crm_views.xml',
+        'views/expenses_invoices.xml',
         'views/menu_view.xml',
         'data/sequences.xml',
         'data/default_stages.xml',
